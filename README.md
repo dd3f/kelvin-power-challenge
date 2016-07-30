@@ -1,11 +1,12 @@
 # kelvin-power-challenge
 
 A baseline solution and visualization tools for [Kelvin Mars Power Challenge](https://kelvins.esa.int/mars-express-power-challenge/).
+This is a fork would be the porting of the project to Python 3.
 
 ### Instructions
 
 #### Step 1. Install Dependencies
-- Python 2.7
+- Python 2.7 or Python 3.5
 - Numpy
 - Pandas (I am using 0.18, if you cannot upgrade you need to change .resample() methods to old syntax)
 - Matplotlib
