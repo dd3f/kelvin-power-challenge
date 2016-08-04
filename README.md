@@ -1,7 +1,8 @@
 # kelvin-power-challenge
 
 A baseline solution and visualization tools for [Kelvin Mars Power Challenge](https://kelvins.esa.int/mars-express-power-challenge/).
-This is a fork would be the porting of the project to Python 3.
+
+This **fork** would be the porting of the project to Python 3.
 
 ### Instructions
 
