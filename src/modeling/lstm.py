@@ -63,7 +63,7 @@ class LSTM:
         #print "data.shape[0] -> %d"%data.shape[0]
         for ex in range(data.shape[0]-sequence_length+1):
             prepared_data.append(data.iloc[ex:ex+sequence_length].as_matrix())
-        print "last ex %d"%range(data.shape[0]-sequence_length)[-1]
+        print ("last ex %d"%range(data.shape[0]-sequence_length)[-1])
         i=1
         for ex in range(data.shape[0]-sequence_length+1,data.shape[0]):
             #print "ex: %d"%ex
@@ -88,12 +88,12 @@ class LSTM:
         batch_size = self.params['batch_size']
         self.X_train = X_train
         
-        print "SPECS:"
-        print " num_units (LSTM)",num_units
-        print " sequence_length",sequence_length
-        print " input_dim (X)",input_dim
-        print " output_dim (Y)",output_dim
-        print " batch_size",batch_size
+        print( "SPECS:")
+        print( " num_units (LSTM)",num_units)
+        print( " sequence_length",sequence_length)
+        print( " input_dim (X)",input_dim)
+        print( " output_dim (Y)",output_dim)
+        print( " batch_size",batch_size)
         
         #print X_train.columns
         
@@ -101,7 +101,7 @@ class LSTM:
         
         #print Y_train.columns
         #print X_train.iloc[0:20,0]
-        print "X_train len", len(X_train.index)
+        print( "X_train len", len(X_train.index))
         
         start =  len(X_train.index) % (batch_size*sequence_length)
         
@@ -164,7 +164,7 @@ class LSTM:
         # merge the train and the test
         
         X_merged = pd.concat([self.X_train, X_valid])
-        print len(X_merged.index)
+        print( len(X_merged.index))
         
         start =  len(X_merged.index) % (batch_size*sequence_length)
         

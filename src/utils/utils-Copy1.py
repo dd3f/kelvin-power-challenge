@@ -24,7 +24,7 @@ def convert_time(df):
 
 def resample(df):
     df = df.set_index('ut_ms')
-    df = df.resample('15Min').mean()
+    df = df.resample('1H').mean()
     return df
 
 

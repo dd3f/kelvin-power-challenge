@@ -1,16 +1,22 @@
 """Visualize power line data against one of the context files"""
 
+from __future__ import print_function    # (at top of module)
 import sys
 import matplotlib.pyplot as plt
 from scipy.stats import spearmanr
 from sklearn.preprocessing import MinMaxScaler
+import pandas as pd
+
+from utils.utils import *
+from config import config
 
 sys.path.append("../")
 
-from utils.utils import *
+#from utils.utils import *
 
 #Define the aggregation interval (can be 1H, 1D, 1W)
 interval = '1D'
+interval = '1H'
 
 def d_resample(df):
     if interval:
@@ -41,22 +47,24 @@ context_title="DMOP"
 cols=config.target_cols
 cols=sorted(cols, key=lambda col:target[col].std(), reverse=True)
 
-print "Standard deviation by power line:"
+print( "Standard deviation by power line:")
 for col in cols:
-    print col,',', target[col].std()
+    print( col,',', target[col].std())
 
 
 #Calculate spearman rank correlation of context variables with top2 target variables
-print "Spearman correlation for top two lines"
-print "feature,", cols[0], ',', cols[1]
+print( "Spearman correlation for top two lines")
+print( "feature,", cols[0], ',', cols[1])
 for c_col in context.columns:
     c1s=spearmanr(context[c_col], target[cols[0]][context.index])[0]
     c2s=spearmanr(context[c_col], target[cols[1]][context.index])[0]
-    print c_col, ',', c1s, ',', c2s
+    print( c_col, ',', c1s, ',', c2s)
 
 
+dmop_nrow, dmop_ncol = dmop.shape
+    
 #Prepare the visualization
-fig, axs = plt.subplots(3, 1, sharex=True)
+fig, axs = plt.subplots(3, 1, sharex=True,figsize=(13,13))
 
 if context_title=="DMOP":
     col=cols[0]
@@ -66,6 +74,16 @@ if context_title=="DMOP":
     axs[1].plot(target[col].values, label='True Power ' + col + 'STD:' +str(target[col].std()))
     axs[1].legend()
     axs[2].imshow(dmop.values.T, aspect='auto', interpolation='nearest')
+    if interval == '1D':
+        axs[2].set_xticks(range(0,dmop_nrow,30))#np.linspace(0.5,dmopsorted_sub[i].columns.size+0.5,1.0))
+        axs[2].set_xticklabels(list(dmop.index[0::(30)].strftime('%Y-%m-%d')),rotation='vertical')
+    elif(interval == '1H'):
+        axs[2].set_xticks(range(0,dmop_nrow,24))#np.linspace(0.5,dmopsorted_sub[i].columns.size+0.5,1.0))
+        axs[2].set_xticklabels(list(dmop.index[0::(24)].strftime('%Y-%m-%d')),rotation='vertical')
+    axs[2].set_yticks(np.linspace(0.5,dmop_ncol-0.5,dmop_ncol))#np.linspace(0.5,dmopsorted_sub[i].columns.size+0.5,1.0))
+    axs[2].set_yticklabels(list(dmop.columns))
+
+    
 else:
 
     col=cols[0]

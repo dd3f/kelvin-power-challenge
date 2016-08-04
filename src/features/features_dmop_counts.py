@@ -50,4 +50,4 @@ def generate_count(grouper, name):
     df.fillna(0).to_pickle(config.features_folder + '/dmop_count_' + name + '.pkl')
 
 
-generate_count(lambda dt: datetime(dt.year, dt.month, dt.day, dt.hour), '1h')
+generate_count(lambda dt: datetime(dt.year, dt.month, dt.day, dt.hour), '15Min')

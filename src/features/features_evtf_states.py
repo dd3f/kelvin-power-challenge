@@ -33,7 +33,7 @@ def state_vector(start_ev, end_ev, fieldname):
     u[u['description'] == start_ev] = 1
     u[u['description'] == end_ev] = -1
     u['description'] = u['description'].astype(int)
-    u = u.resample('60s').mean().fillna(0).cumsum().resample('1H').mean()
+    u = u.resample('60s').mean().fillna(0).cumsum().resample('15Min').mean()
     u = u.rename(columns={'description': fieldname})
     return u
 
@@ -49,7 +49,7 @@ def height_vector(regex, fieldname):
     heights3=evtf_all['description'].str.contains('PERICENTRE').map(lambda x: 298 if x else 0).astype(int).copy()
     heights=heights1+heights2+heights3
     u=heights[heights>0]
-    u=u.resample('60s').interpolate().resample('1H').mean()/10000.0
+    u=u.resample('60s').interpolate().resample('15Min').mean()/10000.0
     #u = u.resample('1H').mean().fillna(0).cumsum().resample('1H').mean()
     u=u.to_frame(fieldname)
     return u
