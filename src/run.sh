@@ -29,7 +29,7 @@ cd ..
 
 cd modeling
 
-python2 train_model.py
+#python2 train_model.py
 
 
 
